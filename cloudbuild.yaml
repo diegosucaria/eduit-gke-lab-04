@@ -1,8 +1,8 @@
 substitutions:
-  _REGION: us-central1
-  _REPO: cicd-lab-repo
-  _CLUSTER: gke-cicd-cluster
-  _ZONE: us-central1-c
+  _REGION: us-east4
+  _REPO: gcp-demo
+  _CLUSTER: gke-lab-cluster
+  _PROJECT: gcp-demo-2026
 
 options:
   logging: CLOUD_LOGGING_ONLY
@@ -26,7 +26,7 @@ steps:
     - -c
     - |
       sed "s#IMAGE_URL#$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/flask-app:$SHORT_SHA#g" Manifests/deployment.yaml > Manifests/deployment.tmp.yaml
-      gcloud container clusters get-credentials $_CLUSTER --zone $_ZONE
+      gcloud container clusters get-credentials $_CLUSTER --project $_PROJECT --dns-endpoint
       kubectl apply -f Manifests/deployment.tmp.yaml
       kubectl apply -f Manifests/service.yaml
 
