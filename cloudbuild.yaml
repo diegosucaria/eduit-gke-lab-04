@@ -26,7 +26,7 @@ steps:
     - -c
     - |
       sed "s#IMAGE_URL#$_REGION-docker.pkg.dev/$PROJECT_ID/$_REPO/flask-app:$SHORT_SHA#g" Manifests/deployment.yaml > Manifests/deployment.tmp.yaml
-      gcloud container clusters get-credentials $_CLUSTER --project $_PROJECT --dns-endpoint
+      gcloud container clusters get-credentials $_CLUSTER --project $_PROJECT --dns-endpoint --region us-east4
       kubectl apply -f Manifests/deployment.tmp.yaml
       kubectl apply -f Manifests/service.yaml
 
